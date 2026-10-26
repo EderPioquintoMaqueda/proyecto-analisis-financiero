@@ -4,14 +4,14 @@
 
 from datos import transacciones
 from reportes import mostrar_reporte
-from graficas import mostrar_grafica_gastos
+from graficas import mostrar_graficas_financieras
 
 
 def main():
     """Coordina la ejecución del programa."""
 
     mostrar_reporte(transacciones)
-    mostrar_grafica_gastos(transacciones)
+    mostrar_graficas_financieras(transacciones)
 
 
 if __name__ == "__main__":
