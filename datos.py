@@ -1,22 +1,43 @@
-# Financial Data Analysis Project
-# Proyecto de análisis de datos financieros
 
-# Datos iniciales / Initial data
-transacciones = [
-    {"fecha": "2026-10-01", "tipo": "ingreso",
-        "categoria": "salario", "importe": 18000.00},
-    {"fecha": "2026-10-02", "tipo": "gasto",
-        "categoria": "comida", "importe": 250.00},
-    {"fecha": "2026-10-03", "tipo": "gasto",
-        "categoria": "transporte", "importe": 120.00},
-    {"fecha": "2026-10-05", "tipo": "gasto",
-        "categoria": "vivienda", "importe": 4500.00},
-    {"fecha": "2026-10-08", "tipo": "ingreso",
-        "categoria": "freelance", "importe": 2500.00},
-    {"fecha": "2026-10-10", "tipo": "gasto",
-        "categoria": "comida", "importe": 380.00},
-    {"fecha": "2026-10-12", "tipo": "gasto",
-        "categoria": "transporte", "importe": 200.00},
-    {"fecha": "2026-10-15", "tipo": "gasto",
-        "categoria": "entretenimiento", "importe": 450.00},
-]
+# Data loading
+# Carga de datos
+
+from pathlib import Path
+
+import pandas as pd
+
+
+def cargar_transacciones():
+    """Carga las transacciones financieras desde un archivo CSV."""
+
+    ruta_archivo = Path(__file__).with_name("transacciones.csv")
+
+    df = pd.read_csv(ruta_archivo)
+
+    columnas_esperadas = {
+        "fecha",
+        "tipo",
+        "categoria",
+        "importe",
+    }
+
+    if not columnas_esperadas.issubset(df.columns):
+        raise ValueError(
+            "El CSV debe contener las columnas: "
+            "fecha, tipo, categoria, importe."
+        )
+
+    if df[list(columnas_esperadas)].isnull().any().any():
+        raise ValueError(
+            "El CSV contiene valores vacíos en columnas requeridas."
+        )
+
+    if not df["tipo"].isin(["ingreso", "gasto"]).all():
+        raise ValueError(
+            "La columna 'tipo' solo acepta 'ingreso' o 'gasto'."
+        )
+
+    if (df["importe"] < 0).any():
+        raise ValueError("Los importes no pueden ser negativos.")
+
+    return df

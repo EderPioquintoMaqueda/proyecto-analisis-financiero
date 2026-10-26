@@ -1,0 +1,10 @@
+
+fecha,tipo,categoria,importe
+2026-10-01,ingreso,salario,18000.00
+2026-10-02,gasto,comida,250.00
+2026-10-03,gasto,transporte,120.00
+2026-10-05,gasto,vivienda,4500.00
+2026-10-08,ingreso,freelance,2500.00
+2026-10-10,gasto,comida,380.00
+2026-10-12,gasto,transporte,200.00
+2026-10-15,gasto,entretenimiento,450.00
