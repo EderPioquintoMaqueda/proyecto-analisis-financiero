@@ -8,10 +8,11 @@ import matplotlib.pyplot as plt
 
 
 def mostrar_grafica_gastos(transacciones):
-    """Muestra los gastos agrupados por categoría."""
+    """Muestra los gastos agrupados por categoría, de mayor a menor."""
 
     gastos_por_categoria = defaultdict(float)
 
+    # Agrupar los gastos por categoría.
     for transaccion in transacciones:
         if transaccion["tipo"] == "gasto":
             categoria = transaccion["categoria"]
@@ -19,12 +20,23 @@ def mostrar_grafica_gastos(transacciones):
 
             gastos_por_categoria[categoria] += importe
 
-    categorias = list(gastos_por_categoria.keys())
-    importes = list(gastos_por_categoria.values())
+    # Ordenar las categorías por importe, de mayor a menor.
+    categorias_ordenadas = sorted(
+        gastos_por_categoria,
+        key=gastos_por_categoria.get,
+        reverse=True,
+    )
 
+    # Obtener los importes en el mismo orden de las categorías.
+    importes_ordenados = [
+        gastos_por_categoria[categoria]
+        for categoria in categorias_ordenadas
+    ]
+
+    # Crear la gráfica de barras.
     plt.figure(figsize=(9, 5))
 
-    plt.bar(categorias, importes)
+    plt.bar(categorias_ordenadas, importes_ordenados)
 
     plt.title("Gastos por categoría / Expenses by category")
     plt.xlabel("Categoría / Category")
